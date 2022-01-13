@@ -8,6 +8,8 @@
 </head>
 <body>
 <?php 
+require_once('Config.php');
+
 $fname = $lname = $email = $address = $phone = $password = $cpassword = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -27,8 +29,6 @@ function test_input($data){
     return $data;
 }
 
-
-
 echo "<h1>Please Confirm your entries</h1>";
 echo "Name: " . $fname . "<br>";
 echo "Last Name: " . $lname . "<br>";
@@ -37,11 +37,40 @@ echo "Address: " .$address . "<br>";
 echo "Phone: " .$phone . "<br>";
 echo "Password: " .$password . "<br>";
 echo "Confirm Password: " .$cpassword . "<br>";
-
+echo "<a href='Confirm.php' class='confirm'>Confirm</a>";
+exit();
 ?>
-<p>
-    <a href="Login.php">Confirm</a>
-</p>
+
+<a href="confirm" class="confirm">Confirm</a>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script language="JavaScript" type="text/javascript">
+$(document).ready(function(){
+  $("a.confirm").click(function(){
+    return
+
+
+<?php
+if(!isset($errorMsg)){
+    $sql = "insert into users(FirstName, LastName, Email, Address, Phone, Password)
+            values('".$fname."', '".$lname."', '".$email."', '".$address."', '".$phone."', '".$password."')";
+    $result = mysqli_query($conn, $sql);
+    if($result){
+        header('Location: Login.php');
+    }else{
+        $errorMsg = 'Error '.mysqli_error($conn);
+        header('Location: error.php');
+    }
+}else{
+    $errorMsg = 'Error '.mysqli_error($conn);
+            header('Location: error.php');
+}
+?>
+
+});
+});
+</script>
+
 
 </body>
 </html>
