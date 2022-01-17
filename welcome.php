@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+if(isset($_SESSION['FirstName'])){
+    header("Location: index.php");
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +17,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>ERROR</h1>
+    <?php echo "<h1>Welcome " . $_SESSION['FirstName'] . "</h1>"; ?>
+    <a href="Logout.php">Log Out</a>
 </body>
 </html>

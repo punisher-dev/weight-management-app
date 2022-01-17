@@ -1,3 +1,32 @@
+<?php
+include 'Config.php';
+
+session_start();
+
+error_reporting(0);
+
+if(isset($_SESSION['FirstName'])){
+    header("Location: welcome.php");
+}
+
+if(isset($POST['submit'])){
+    $email = $_POST['email'];
+    $password = md5($_POST['password']);
+
+    $sql = "SELECT * FROM users WHERE Email='$email' AND Password='$password'";
+    $result = mysqli_query($conn, $sql);
+    if($result->num_rows > 0){
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['FirstName'] = $row['FirstName'];
+        header("Location: welcome.php");
+    }else {
+        echo "<script>alert('Email or Password is wrong.')</script>";
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +36,16 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Login</h1>
+    <form action="" method="post">
+        Email: <input type="email" name="email" value="<?php echo $email;?>" required><br>
+        Password: <input type="password" name="password" value="<?php echo $_POST['password'];?>" required>
+        <button name="submit"><a href="welcome.php"> Login </a></button>
+    
 
-
-    <h1> Register </h1>
-<form action="Confirm.php" method="post" >
-First Name: <input type="text" name="fname"><br>
-Last Name: <input type="text" name="lname"><br>
-Email: <input type="text" name="email"><br>
-Address: <input type="text" name="address"><br>
-Phone: <input type="text" name="phone"> <br>
-Password: <input type="password" name="password"> <br>
-Confirm Password: <input type="password" name="cpassword"> <br>
-<input type="submit" name="submit" value="Submit">
-</form>
-
-<p> Have an account?
-    <a href="Login.php">Login Here</a>
+    <p> Don't have an account?
+    <a href="register.php">Register Here</a>
 </p>
-
+</form>
 </body>
 </html>
