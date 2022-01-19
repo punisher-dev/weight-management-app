@@ -4,6 +4,7 @@ include 'Config.php';
 session_start();
 
 $result = '';
+
 $email = '';
 $password = '';
 
