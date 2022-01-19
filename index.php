@@ -3,27 +3,29 @@ include 'Config.php';
 
 session_start();
 
-error_reporting(0);
+$result = '';
+$email = '';
+$password = '';
 
-if(isset($_SESSION['first_name'])){
-    header("Location: welcome.php");
-}
+if(isset($_POST['submit'])){
 
-if(isset($POST['submit'])){
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
     $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
     $result = mysqli_query($conn, $sql);
-    if($result->num_rows > 0){
+
+    if($result->num_rows > 0) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['first_name'] = $row['first_name'];
-        header("Location: welcome.php");
-    }else {
+    } else {
         echo "<script>alert('Email or Password is wrong.')</script>";
     }
 }
 
+if(isset($_SESSION['first_name'])){
+    header("Location: welcome.php");
+}
 
 ?>
 
@@ -36,12 +38,14 @@ if(isset($POST['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+
     <h1>Login</h1>
-    <form action="" method="post">
-        Email: <input type="email" name="email" value="<?php echo $email;?>" required><br>
-        Password: <input type="password" name="password" value="<?php echo $_POST['password'];?>" required>
-        <button name="submit"><a href="welcome.php"> Login</button>
+    <form action="" method="POST">
+        Email: <input type="email" name="email" value="<?php echo $email;?>" required /><br />
+        Password: <input type="password" name="password" required /><br />
+        <button type="submit" name="submit">Login</button>
     
 
     <p> Don't have an account?
