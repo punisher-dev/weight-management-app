@@ -1,7 +1,7 @@
 CREATE DATABASE weight_management_app;
 
 CREATE TABLE users (
-id int AUTO_INCREMENT,
+user_id int AUTO_INCREMENT,
 first_name varchar(255),
 last_name varchar(255),
 email varchar(255),
@@ -10,5 +10,23 @@ phone varchar(255),
 created_at DATETIME,
 updated_at DATETIME,
 password varchar(255),
-PRIMARY KEY (id)
+PRIMARY KEY (user_id)
+);
+
+
+CREATE TABLE user_data(
+	data_id int AUTO_INCREMENT,
+    user_id int,
+    weight varchar(255),
+    height varchar(255),
+    age varchar(255),
+    sex varchar(255),
+    activity varchar(255),
+    goal varchar(255),
+    calories varchar(255),
+    protein varchar(255),
+    fat varchar(255),
+    carbohydrates varchar(255),
+    PRIMARY KEY (data_id),
+    FOREIGN KEY (id) REFERENCES users(id)
 );
