@@ -3,10 +3,12 @@ CREATE DATABASE weight_management_app;
 CREATE TABLE users (
 id int AUTO_INCREMENT,
 first_name varchar(255),
-LastName varchar(255),
+last_name varchar(255),
 email varchar(255),
-Address varchar(255),
-Phone varchar(255),
+address varchar(255),
+phone varchar(255),
+created_at DATETIME,
+updated_at DATETIME,
 password varchar(255),
 PRIMARY KEY (id)
 );

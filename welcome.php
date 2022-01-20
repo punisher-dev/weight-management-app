@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['first_name'])){
+if(!isset($_SESSION['first_name'])){
     header("Location: index.php");
 }
 ?>
@@ -16,7 +16,11 @@ if(isset($_SESSION['first_name'])){
     <title>Welcome</title>
 </head>
 <body>
+    <!-- <p>SESSION</p>
+    <pre>print_r($_SESSION) </pre> -->
     <?php echo "<h1>Welcome " . $_SESSION['first_name'] . "</h1>"; ?>
+
+    
     <a href="Logout.php">Log Out</a>
 </body>
 </html>
