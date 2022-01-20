@@ -6,7 +6,6 @@ if(!isset($_SESSION['first_name'])){
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +15,13 @@ if(!isset($_SESSION['first_name'])){
     <title>Welcome</title>
 </head>
 <body>
+<<<<<<< HEAD
     <!-- <p>SESSION</p>
     <pre>print_r($_SESSION) </pre> -->
+=======
+    <p>SESSION</p>
+    <pre><?php print_r($_SESSION) ?></pre>
+>>>>>>> fcf7d96062fc8ff2a7fef6f01e6148f5ec013743
     <?php echo "<h1>Welcome " . $_SESSION['first_name'] . "</h1>"; ?>
 
     
