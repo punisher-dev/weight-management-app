@@ -8,11 +8,7 @@ if(isset($_SESSION['first_name'])){
 }
 
 $first_name = '';
-<<<<<<< HEAD
 $last_name = '';
-=======
-$lname = '';
->>>>>>> fcf7d96062fc8ff2a7fef6f01e6148f5ec013743
 $email = '';
 $address = '';
 $phone = '';
@@ -29,10 +25,8 @@ if(isset($_POST['submit'])){
     $cpassword = md5($_POST['cpassword']);
 
     if($password == $cpassword){
-
         $sql = "SELECT * FROM users WHERE email='$email'";
         $result = mysqli_query($conn, $sql);
-<<<<<<< HEAD
 
         if(!$result->num_rows > 0){
 
@@ -50,35 +44,20 @@ if(isset($_POST['submit'])){
         $phone = "";
         $_POST['password'] = "";
         $_POST['cpassword'] = "";
-=======
-        
-        if(!$result->num_rows > 0){
-            
-            $sql = "INSERT INTO users(first_name, last_name, email, address, phone, password) VALUES('$first_name', '$lname', '$email', '$address', '$phone', '$password')";
-            $result = mysqli_query($conn, $sql);
-            
-            if($result){
-                echo "<script>alert('User Registered.')</script>";
-                $first_name = "";
-                $lname = "";
-                $email = "";
-                $address = "";
-                $phone = "";
-                $_POST['password'] = "";
-                $_POST['cpassword'] = "";
-            } else {
-                echo "<script>alert('Something went wrong.')</script>";
-            }
->>>>>>> fcf7d96062fc8ff2a7fef6f01e6148f5ec013743
         } else {
-            echo "<script>alert('E-mail already registered.')</script>";
+        echo "<script>alert('Something went wrong.')</script>";
         }
     } else {
-        echo "<script> alert('Password Not Matched.')</script>";
+        echo "<script>alert('E-mail already registered.')</script>";
+    }
+    } else {
+     echo "<script> alert('Password Not Matched.')</script>";
     }
  }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +69,6 @@ if(isset($_POST['submit'])){
 </head>
 <body>
 
-<<<<<<< HEAD
 
     <h1> Register </h1>
 <form action="" method="POST" >
@@ -109,29 +87,6 @@ Confirm Password: <input type="password" name="cpassword" /><br />
 </p>
 
 </form>
-=======
-    <h1>Register</h1>
-    <form action="" method="POST">
-        
-        <p></p>
-        <br />
-        First Name: <input type="text" name="first_name" value="<?php echo $first_name; ?>" /><br />
-        Last Name: <input type="text" name="lname" value="<?php echo $lname; ?>" /><br />
-        Email: <input type="email" name="email" value="<?php echo $email; ?>" /><br />
-        Address: <input type="text" name="address" value="<?php echo $address; ?>" /><br />
-        Phone: <input type="text" name="phone" value="<?php echo $phone; ?>" /> <br />
-        Password: <input type="password" name="password" /><br>
-        Confirm Password: <input type="password" name="cpassword" /><br>
-        
-        <button name="submit">Register</button>
-
-
-        <p> Have an account?
-            <a href="index.php">Login Here</a>
-        </p>
-
-    </form>
->>>>>>> fcf7d96062fc8ff2a7fef6f01e6148f5ec013743
 
 </body>
 </html>

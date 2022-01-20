@@ -7,21 +7,14 @@ $result = '';
 
 $email = '';
 $password = '';
-<<<<<<< HEAD
 
 if(isset($_POST['submit'])){
-=======
-
-if(isset($_POST['submit'])){
-
->>>>>>> fcf7d96062fc8ff2a7fef6f01e6148f5ec013743
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
     $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
     $result = mysqli_query($conn, $sql);
-
-    if($result->num_rows > 0) {
+    if($result->num_rows > 0){
         $row = mysqli_fetch_assoc($result);
         $_SESSION['first_name'] = $row['first_name'];
     } else {
@@ -44,9 +37,7 @@ if(isset($_SESSION['first_name'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-
     <h1>Login</h1>
     <form action="" method="POST">
         Email: <input type="email" name="email" value="<?php echo $email;?>" required /><br />
