@@ -10,7 +10,32 @@ if(!isset($_SESSION['first_name'])){
 $sess = $_SESSION['first_name'];
 
 
+
+$user_id = '';
+$weight = '';
+$height = '';
+$age = '';
+$sex = '';
+$activity = '';
+$goal = '';
+$calories = '';
+$protein = '';
+$fat = '';
+$carbohydrates = '';
+
+
 if(!isset($_POST['submit'])){
+
+    $weight = $_POST['weight'];
+    $height = $_POST['height'];
+    $age = $_POST['age'];
+    $sex = $_POST['sex'];
+    $activity = $_POST['activity'];
+    $goal = $_POST['goal'];
+    $calories = $_POST['calories'];
+    $protein = $_POST['protein'];
+    $fat = $_POST['fat'];
+    $carbohydrates = $_POST['carbohydrates'];
 
     $sql = "SELECT * FROM users WHERE first_name='$sess'";
     $result = mysqli_query($conn, $sql);
@@ -19,11 +44,34 @@ if(!isset($_POST['submit'])){
             $row = mysqli_fetch_assoc($result);
             $_SESSION['user_id'] = $row['user_id'];
             $user_id = $_SESSION['user_id'];
-           
-            }  else {
-    echo "<script> alert('Id not recognized.')</script>";
+            $sql = "INSERT INTO user_data(user_id, weight, height, age, sex, activity, goal, calories, protein, fat, carbohydrates)
+            VALUES('$user_id', '$weight', '$height', '$age', '$sex', '$activity', '$goal', '$calories', '$protein', '$fat', '$carbohydrates')";
+
+            $result = mysqli_query($conn, $sql);
+
+            if($result){
+                echo "<script>alert('Data entered.')</script>";
+                $user_id = "";
+                $weight = "";
+                $height = "";
+                $age = "";
+                $sex = "";
+                $activity = "";
+                $goal = "";
+                $calories = "";
+                $protein = "";
+                $fat = "";
+                $carbohydrates = "";
+            } else {
+                echo "<script>alert('Something went wrong.')</script>";
+            }
+        } else {
+            echo "<script>alert('Id not recognized.')</script>";
+        }
+} else {
+    echo "<script> alert('Data not entered.')</script>";
 }
-}
+
 
 
 
@@ -105,42 +153,19 @@ if(!isset($_POST['submit'])){
             
             <h3>Macros</h3>
             <p id="result"></p>
+            <?php
 
+                echo $user_id . $weight . $height . $age . $sex . $activity . $goal . $calories . $protein . $fat . $carbohydrates;
+
+            ?>
             <button type="submit" name="submit" onclick="macros()" class="btn btn-light">RESULT</button>
 
             <a href="Logout.php">Log Out</a>
             </form>
-
     </div>
    
 </section>
-<?php
 
-$user_id = $_SESSION['user_id'];
-$weight = $_POST['weight'];
-$height = $_POST['height'];
-$age = $_POST['age'];
-$sex = $_POST['sex'];
-$activity = $_POST['activity'];
-$goal = $_POST['goal'];
-$calories = $_POST['calories'];
-$protein = $_POST['protein'];
-$fat = $_POST['fat'];
-$carbohydrates = $_POST['carbohydrates'];
-
-
-if(isset($_POST['submit']) && isset($_SESSION['user_id'])){
-
-    $sql = "INSERT INTO user_data(user_id, weight, height, age, sex, activity, goal, calories, protein, fat, carbohydrates)
-    VALUES('$user_id', '$weight', '$height', '$age', '$sex', '$activity', '$goal', '$calories', '$protein', '$fat', '$carbohydrates')";
-
-    $result = mysqli_query($conn, $sql);
-    echo "<script> alert('Data successfully entered.')</script>";
-
-} else {
-    echo "<script> alert('Data not entered.')</script>";
-}
-?>
 
     <script src="index.js" charset="utf-8"></script>
 </body>         
