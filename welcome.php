@@ -3,6 +3,8 @@ include 'Config.php';
 
 session_start();
 
+error_reporting(0);
+
 if(!isset($_SESSION['first_name'])){
     header("Location: index.php");
 }
@@ -27,6 +29,8 @@ if(!isset($_POST['submit'])){
     $activity = $_POST['activity'];
     $goal = $_POST['goal'];
 
+    if($weight > 0 && $height > 0 && $age > 0){
+
     $sql = "SELECT * FROM users WHERE first_name='$sess'";
     $result = mysqli_query($conn, $sql);
 
@@ -40,7 +44,7 @@ if(!isset($_POST['submit'])){
             $result = mysqli_query($conn, $sql);
 
             if($result){
-                echo "<script>alert('Data entered.')</script>";
+                header("Location: macros.php");
                 $user_id = "";
                 $weight = "";
                 $height = "";
@@ -55,9 +59,11 @@ if(!isset($_POST['submit'])){
             echo "<script>alert('Id not recognized.')</script>";
         }
 } else {
-    echo "<script> alert('Data not entered.')</script>";
+    echo "<script> alert('Welcome " . $sess . "')</script>";
 }
-
+} else {
+    echo "<script> alert('Please enter a valid value.')</script>";
+}
 
 
 
@@ -73,7 +79,7 @@ if(!isset($_POST['submit'])){
     <title>Welcome</title>
 </head>
 <body>
-<?php echo "<h1>Welcome " . $_SESSION['first_name'] . " id " . $_SESSION['user_id'] . "</h1>"; ?>
+<?php echo "<h1>Welcome " . $sess . "</h1>"; ?>
         <form action="" method="POST">
             Weight: <input type="text" name="weight" id="weight" /><br />
             Height: <input type="text" name="height" id="height" /><br />
