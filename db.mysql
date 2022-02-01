@@ -23,10 +23,19 @@ CREATE TABLE user_data(
     sex varchar(255),
     activity varchar(255),
     goal varchar(255),
+    PRIMARY KEY (data_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE macros(
+	macros_id int AUTO_INCREMENT,
+    user_id int,
     calories varchar(255),
     protein varchar(255),
     fat varchar(255),
     carbohydrates varchar(255),
-    PRIMARY KEY (data_id),
-    FOREIGN KEY (id) REFERENCES users(id)
+    PRIMARY KEY (macros_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+
