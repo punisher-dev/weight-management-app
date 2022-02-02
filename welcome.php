@@ -91,8 +91,8 @@ if(!isset($_POST['submit'])){
                     <select name="activity" id="activity">
                         <option value="sedentary">Sedentary</option>
                         <option value="light">Light: 1-3 times a week</option>
-                        <option value="moderate">Moderate: 4-5 times a week</option>
-                        <option value="active">Active: Intense 3-4 times a week</option>
+                        <option value="moderate">Moderate: 3-4 times a week</option>
+                        <option value="active">Active: 4-5 times a week</option>
                         <option value="very-active">Very Active: Intense 6-7 times a week</option>
                         <option value="extra-active">Extra Active</option>
                     </select> <br />
