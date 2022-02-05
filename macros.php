@@ -57,26 +57,6 @@ if($goal == 'loose'){
     $fat = floor((($calories/100)*25)/9);
     $carbohydrates = floor(($calories - (($protein * 4) + ($fat * 9)))/4);
 
-?>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Macros</title>
-</head>
-<body>
-    <?php echo "<script>alert('Data entered.')</script>"; ?>
-    <?php echo "<h1> Hello " . $sess . " <br /> Your Macros are: <br /> Calories: " . $calories . "Kcal <br /> Protein: " . $protein ."g <br /> Fat: " .$fat . "g <br /> Carbohydrates: " . $carbohydrates . "g</h1>"; ?>
-    <button type="submit" name="submit">Next</button>
-</body>
-</html>
-
-<?php
 if(!isset($_POST['submit'])){
     $sql = "INSERT INTO macros(user_id, calories, protein, fat, carbohydrates)
             VALUES('$user_id', '$calories', '$protein', '$fat', '$carbohydrates')";

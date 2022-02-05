@@ -65,21 +65,45 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
+
 </head>
 <body>
 
-
-    <h1> Register </h1>
+<div class="card">
+    <h1> REGISTER </h1>
 <form action="" method="POST" >
-First Name: <input type="text" name="first_name" value="<?php echo $first_name; ?>" /><br />
-Last Name: <input type="text" name="last_name" value="<?php echo $last_name; ?>" /><br />
-Email: <input type="email" name="email" value="<?php echo $email; ?>" /><br />
-Address: <input type="text" name="address" value="<?php echo $address; ?>" /><br />
-Phone: <input type="text" name="phone" value="<?php echo $phone; ?>" /><br>
-Password: <input type="password" name="password" /><br />
-Confirm Password: <input type="password" name="cpassword" /><br />
-<button type="submit" name="submit">Register</button>
+    <div class="mb-3">
+            <label for="first_name" class="form-label">First Name:*</label>
+            <input class="form-control" type="text" name="first_name" placeholder="First Name" value="<?php echo $first_name; ?>" />
+    </div>
+    <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name:*</label>
+            <input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" />
+    </div>
+    <div class="mb-3">
+            <label for="email" class="form-label">Email:*</label>
+            <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" />
+    </div>
+    <div class="mb-3">
+            <label for="address" class="form-label">Address:</label>
+            <input class="form-control" type="text" name="address" placeholder="Address" value="<?php echo $address; ?>" />
+    </div>
+    <div class="mb-3">
+            <label for="phone" class="form-label">Phone:</label>
+            <input class="form-control" type="text" name="phone" placeholder="Phone" value="<?php echo $phone; ?>" />
+    </div>
+    <div class="mb-3">
+            <label for="password" class="form-label">Password:*</label>
+            <input class="form-control" type="password" name="password" />
+    </div>
+    <div class="mb-3">
+            <label for="cpassword" class="form-label">Confirm Password:*</label>
+            <input class="form-control" type="cpassword" name="cpassword" />
+    </div>
+<button class="btn btn-secondary" type="submit" name="submit">Register</button>
 
 
 <p> Have an account?
@@ -87,6 +111,7 @@ Confirm Password: <input type="password" name="cpassword" /><br />
 </p>
 
 </form>
+</div>
 
 </body>
 </html>
