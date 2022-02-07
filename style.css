@@ -24,6 +24,16 @@ padding: 20px;
 margin: 20px;
 }
 
+.macros{
+    width: 12rem;
+    padding: 20px;
+    margin: auto;
+    padding-bottom: 50px;
+    }
+
 .card{
     width: 21rem;
+    max-width: 700px;
+    margin: auto;
+    margin-top: 40px;
 }
