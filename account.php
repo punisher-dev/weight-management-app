@@ -24,6 +24,36 @@ $user_id = $_SESSION['user_id'];
     $address = $row['address'];
     $phone = $row['phone'];
 
+    if(isset($_POST['submit'])){
+      $first_name = $_POST['first_name'];
+      $last_name = $_POST['last_name'];
+      $email = $_POST['email'];
+      $address = $_POST['address'];
+      $phone = $_POST['phone'];
+    } else {
+      $errorMsg = 'Something went wrong';
+    }
+
+
+    if(!isset($errorMsg)){
+			$sql = "update users
+									set first_name = '".$first_name."',
+                  last_name = '".$last_name."',
+                  email = '".$email."',
+                  address = '".$address."',
+                  phone = '".$phone."'
+					where user_id=".$user_id;
+			$result = mysqli_query($conn, $sql);
+			if($result){
+				echo "<script>alert('Updated Successfully.')</script>";
+				header('Location:account.php');
+			}else{
+				$errorMsg = 'Something went wrong';
+			} 
+    }else {
+        $errorMsg = 'Something went wrong';
+      }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +64,22 @@ $user_id = $_SESSION['user_id'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#show").click(function(e){
+    e.preventDefault();
+    $(".shown").show();
+  });
+});
+
+$(document).ready(function(){
+  $("#show").click(function(e){
+    e.preventDefault();
+    $(".edit").hide();
+  });
+});
+</script>
     <title>Account</title>
 </head>
 <body>
@@ -58,17 +104,47 @@ $user_id = $_SESSION['user_id'];
 <div class="card">
     <?php echo 
     "<h1> Hello " . $sess . " </h1><br />
-    <div class='macros'>
+    <div class='account'>
+    <form action='' method='POST' >
     <strong> Your Account info: </strong><br />
     <div> First Name: " . $first_name . "</div><br /> 
+    
+    
+    <div class='shown hidden mb-3'>
+            <input class='form-control' type='text' name='first_name' placeholder='First Name' value='" . $row['first_name'] . "' />
+    </div>
+
     <div> Last Name: " . $last_name . " </div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='last_name' placeholder='Last Name' value='" . $row['last_name'] . "' />
+</div>
+
     <div>Email: " . $email ."</div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='email' name='email' placeholder='Email' value='" . $row['email'] . "' />
+</div>
+
     <div>Address: " .$address . "</div><br /> 
-    <div>Phone: " . $phone . "
-    </div>"; ?>
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='address' placeholder='Address' value='" . $row['address'] . "' />
+</div>
+
+    <div>Phone: " . $phone . "</div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='phone' placeholder='Phone' value='" . $row['phone'] . "' />
+</div><br /> 
+<button id='show' class='btn edit btn-secondary' name='edit'>Edit</button>
+<button class='hidden shown btn btn-secondary' type='submit' name='submit'>Submit</button>
+<button class='hidden shown btn btn-secondary'>Back</button>
+<a href='Logout.php'>Log Out</a>
+</form>
+</div>"; ?>
     
-    <a href="Logout.php">Log Out</a>
-    
+
     </div>
 </div>
 

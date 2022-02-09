@@ -25,6 +25,37 @@ $user_id = $_SESSION['user_id'];
     $activity = $row['activity'];
     $goal = $row['goal'];
 
+    if(isset($_POST['submit'])){
+      $weight = $_POST['weight'];
+      $height = $_POST['height'];
+      $age = $_POST['age'];
+      $activity = $_POST['activity'];
+      $goal = $_POST['goal'];
+    } else {
+      $errorMsg = 'Something went wrong';
+    }
+
+
+    if(!isset($errorMsg)){
+			$sql = "update user_data
+									set weight = '".$weight."',
+                  height = '".$height."',
+                  age = '".$age."',
+                  activity = '".$activity."',
+                  goal = '".$goal."'
+					where user_id=".$user_id;
+			$result = mysqli_query($conn, $sql);
+			if($result){
+				echo "<script>alert('Updated Successfully.')</script>";
+				header('Location:biometrics.php');
+			}else{
+				$errorMsg = 'Something went wrong';
+			} 
+    }else {
+        $errorMsg = 'Something went wrong';
+      }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +66,22 @@ $user_id = $_SESSION['user_id'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#show").click(function(e){
+    e.preventDefault();
+    $(".shown").show();
+  });
+});
+
+$(document).ready(function(){
+  $("#show").click(function(e){
+    e.preventDefault();
+    $(".edit").hide();
+  });
+});
+</script>
     <title>Biometrics</title>
 </head>
 <body>
@@ -59,17 +106,58 @@ $user_id = $_SESSION['user_id'];
 <div class="card">
     <?php echo 
     "<h1> Hello " . $sess . " </h1><br />
-    <div class='macros'>
+    <div class='account'>
+    <form action='' method='POST' >
     <strong> Your Biometrics are: </strong><br />
     <div> Weight: " . $weight . "Kg </div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='weight' placeholder='Weight' value='" . $row['weight'] . "' />
+</div>
+
     <div> Height: " . $height . "cm </div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='height' placeholder='Height' value='" . $row['height'] . "' />
+</div>
+
     <div>Age: " . $age ."</div><br /> 
+
+    <div class='shown hidden mb-3'>
+    <input class='form-control' type='text' name='age' placeholder='Age' value='" . $row['age'] . "' />
+</div>
+
     <div>Sex: " .$sex . "</div><br /> 
-    <div>Activity: " . $activity . " </div><br />
-    <div>Goal: " . $goal . " weight
-    </div>"; ?>
+
+    <div>Activity: " . $row['activity'] . " </div><br />
+
+    <div class='shown hidden mb-3'>
+    <label for='activity' class='form-label'>Activity*:</label>
+    <select class='form-select' name='activity' id='activity'>
+        <option value='sedentary'>Sedentary</option>
+        <option value='light'>Light: 1-3 times a week</option>
+        <option value='moderate'>Moderate: 3-4 times a week</option>
+        <option value='active'>Active: 4-5 times a week</option>
+        <option value='very-active'>Very Active: Intense 6-7 times a week</option>
+        <option value='extra-active'>Extra Active</option>
+    </select>
+</div>
+
+
+    <div>Goal: " . $row['goal'] . " weight</div><br />
     
-    <a href="Logout.php">Log Out</a>
+    <div class='shown hidden mb-3'>
+                    <label for='goal' class='form-check-label'>Goal*:</label><br /> 
+        Loose Weight: <input class='form-check-input' type='radio' name='goal' id='loose' value='loose' />
+        Gain Weight:  <input class='form-check-input' type='radio' name='goal' id='gain' value='gain' />
+        </div><br />
+        <button id='show' class='btn edit btn-secondary' name='edit'>Edit</button>
+<button class='hidden shown btn btn-secondary' type='submit' name='submit'>Submit</button>
+<button class='hidden shown btn btn-secondary'>Back</button>
+<a href='Logout.php'>Log Out</a>
+</form>
+</div>"; ?>
+    
     
     </div>
 </div>

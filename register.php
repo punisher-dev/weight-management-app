@@ -36,7 +36,7 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($conn, $sql);
 
         if($result){
-        echo "<script>alert('User Registered.')</script>";
+        header("Location: index.php");
         $first_name = "";
         $last_name = "";
         $email = "";
