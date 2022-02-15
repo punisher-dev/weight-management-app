@@ -47,13 +47,72 @@ $user_id = $_SESSION['user_id'];
 			$result = mysqli_query($conn, $sql);
 			if($result){
 				echo "<script>alert('Updated Successfully.')</script>";
-				header('Location:biometrics.php');
+				header('Location:meal.php');
 			}else{
 				$errorMsg = 'Something went wrong';
 			} 
     }else {
         $errorMsg = 'Something went wrong';
       }
+
+      // _______________________________________
+
+      $calculator = ((10*$weight)+(6.25*$height)-(5*$age));
+
+      
+    if($sex == 'male'){
+      $sexValue = $calculator + 5;
+  } else {
+    $sexValue = $calculator - 161;
+  }
+
+
+  if($activity == 'sedentary'){
+      $activity = 20;
+  }elseif($activity == 'light'){
+      $activity = 37.5;
+  }elseif($activity == 'moderate'){
+      $activity = 46.5;
+  }elseif($activity == 'active'){
+      $activity = 55;
+  }elseif($activity == 'very-active'){
+      $activity = 72.5;
+  } else {
+      $activity = 90;
+  }
+
+if($goal == 'loose'){
+  $goal = $sexValue - 500;
+} else {
+  $goal = $sexValue + 500;
+}
+
+
+  $calories = floor((($activity * $sexValue)/100) + $goal);
+  $protein = $weight * 2;
+  $fat = floor((($calories/100)*25)/9);
+  $carbohydrates = floor(($calories - (($protein * 4) + ($fat * 9)))/4);
+
+
+      if(!isset($errorMsg)){
+        $sql = "update macros
+                    set calories = '".$calories."',
+                    protein = '".$protein."',
+                    fat = '".$fat."',
+                    carbohydrates = '".$carbohydrates."'
+            where user_id=".$user_id;
+        $result = mysqli_query($conn, $sql);
+        if($result){
+          echo "<script>alert('Updated Successfully.')</script>";
+          header('Location:meal.php');
+        }else{
+          $errorMsg = 'Something went wrong';
+        } 
+      }else {
+          $errorMsg = 'Something went wrong';
+        }
+
+        // print_r($weight, $height, $age, $sex, $activity, $goal, $calculator);
 
 
 ?>
@@ -71,7 +130,7 @@ $user_id = $_SESSION['user_id'];
 $(document).ready(function(){
   $("#show").click(function(e){
     e.preventDefault();
-    $(".shown").show();
+    $(".shown").fadeIn();
   });
 });
 
@@ -81,10 +140,13 @@ $(document).ready(function(){
     $(".edit").hide();
   });
 });
+
+
 </script>
     <title>Biometrics</title>
 </head>
 <body>
+  
   <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -97,6 +159,7 @@ $(document).ready(function(){
       <li class="nav-item"><a class="nav-link active" href="account.php">Account</a></li>
       <li class="nav-item"><a class="nav-link active" href="biometrics.php">Biometrics</a></li>
       <li class="nav-item"><a class="nav-link active" href="meal.php">Macros</a></li>
+      <li class="nav-item"><a class="nav-link active" href="mealPlan.php">Meal Plan</a></li>
     </ul>
   </div>
   </div>
@@ -134,6 +197,7 @@ $(document).ready(function(){
     <div class='shown hidden mb-3'>
     <label for='activity' class='form-label'>Activity*:</label>
     <select class='form-select' name='activity' id='activity'>
+        <option value='" . $row['activity'] . "'>" . $row['activity'] . "</option>
         <option value='sedentary'>Sedentary</option>
         <option value='light'>Light: 1-3 times a week</option>
         <option value='moderate'>Moderate: 3-4 times a week</option>
@@ -145,12 +209,16 @@ $(document).ready(function(){
 
 
     <div>Goal: " . $row['goal'] . " weight</div><br />
-    
+
     <div class='shown hidden mb-3'>
-                    <label for='goal' class='form-check-label'>Goal*:</label><br /> 
-        Loose Weight: <input class='form-check-input' type='radio' name='goal' id='loose' value='loose' />
-        Gain Weight:  <input class='form-check-input' type='radio' name='goal' id='gain' value='gain' />
-        </div><br />
+    <label for='goal' class='form-label'>Goal*:</label>
+    <select class='form-select' name='goal' id='goal'>
+        <option value='" . $row['goal'] . "'>" . $row['goal'] . "</option>
+        <option value='loose'>Loose Weight</option>
+        <option value='gain'>Gain Weight</option>
+        </select>
+        </div>
+
         <button id='show' class='btn edit btn-secondary' name='edit'>Edit</button>
 <button class='hidden shown btn btn-secondary' type='submit' name='submit'>Submit</button>
 <button class='hidden shown btn btn-secondary'>Back</button>

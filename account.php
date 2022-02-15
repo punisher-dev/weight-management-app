@@ -69,7 +69,7 @@ $user_id = $_SESSION['user_id'];
 $(document).ready(function(){
   $("#show").click(function(e){
     e.preventDefault();
-    $(".shown").show();
+    $(".shown").fadeIn();
   });
 });
 
@@ -95,6 +95,7 @@ $(document).ready(function(){
       <li class="nav-item"><a class="nav-link active" href="account.php">Account</a></li>
       <li class="nav-item"><a class="nav-link active" href="biometrics.php">Biometrics</a></li>
       <li class="nav-item"><a class="nav-link active" href="meal.php">Macros</a></li>
+      <li class="nav-item"><a class="nav-link active" href="mealPlan.php">Meal Plan</a></li>
     </ul>
   </div>
   </div>
