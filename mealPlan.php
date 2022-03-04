@@ -9,16 +9,18 @@ $user_id = $_SESSION['user_id'];
 
   if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $sql = "select * from macros where user_id=".$user_id;
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
-    }else {
-      $errorMsg = 'Could not Find Any Record';
-    }
-  }
+    $sql = "select * from macros where user_id=:user_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['user_id' => $user_id]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
 
-    $calories = $row['calories'];
+    foreach($fetch as $item){
+      $calories = $item->calories;
+      break;
+  }
+}
+
 
 ?>
 
@@ -58,11 +60,89 @@ $user_id = $_SESSION['user_id'];
     "<h1> Hello " . $sess . " </h1><br />
     <div class='macros'>
     <strong> Meal Plan: </strong><br />
-    <div>Find Meals bellow that are in accordance to your caloric goal, which is: <br /></div>
+    <div>Find easy meals bellow that are in accordance to your caloric goal, which is: <br /></div>
     <strong>". $calories . " Kcal</strong><br />
     <a href='Logout.php'>Log Out</a>
     </div><br />"; ?>
     </div>
+
+    <?php
+
+// $curl = curl_init();
+
+// curl_setopt_array($curl, [
+// 	CURLOPT_URL => "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?targetCalories=". $calories ."&timeFrame=day",
+// 	CURLOPT_RETURNTRANSFER => true,
+// 	CURLOPT_FOLLOWLOCATION => true,
+// 	CURLOPT_ENCODING => "",
+// 	CURLOPT_MAXREDIRS => 10,
+// 	CURLOPT_TIMEOUT => 30,
+// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+// 	CURLOPT_CUSTOMREQUEST => "GET",
+// 	CURLOPT_HTTPHEADER => [
+// 		"x-rapidapi-host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+// 		"x-rapidapi-key: 360666ae58msh949da77ef1969dfp14fff7jsn360416b93979"
+// 	],
+// ]);
+
+// $response = curl_exec($curl);
+// $err = curl_error($curl);
+
+// curl_close($curl);
+
+// if ($err) {
+// 	echo "cURL Error #:" . $err;
+// } else {
+// 	// echo $response;
+// }
+
+// $response = json_decode($response);
+
+
+// echo "<div class='recipe'>";
+// foreach($response->meals as $meal) {
+//   echo '<div class="card recipecard"><h1>'.$meal->title. '</h1><br />';
+//   echo '<strong>Preparation Time: </strong>'.$meal->readyInMinutes. '<br />';
+//   echo '<strong>Servings: </strong>'.$meal->servings. '<br />';
+//   echo '<button class="btn btn-secondary" onclick=\"location.href='.$meal->sourceUrl.'\" >Recipe</button>
+// </div>
+// <br />';
+// }
+// echo "</div>";
+
+?>
+<!-- // ----------------------------------------------------------------------- -->
+
+
+<div class="recipe">
+<div class="card recipecard">
+  <h1> Mom's Spaghetti </h1>
+  <img src="img/spaghetti.jpg" alt="Italian Trulli">
+  Preparation Time: 40min <br />
+  Servings: 4 <br />
+  <button class="btn btn-secondary" name="submit" type="submit">Recipe</button>
+</div>
+<div class="card recipecard">
+  <h1> Mom's Spaghetti </h1>
+  <img src="img/spaghetti.jpg" alt="Italian Trulli">
+  Preparation Time: 40min <br />
+  Servings: 4 <br />
+  <button class="btn btn-secondary" name="submit" type="submit">Recipe</button>
+</div>
+<div class="card recipecard">
+  <h1> Mom's Spaghetti </h1>
+  <img src="img/spaghetti.jpg" alt="Italian Trulli">
+  Preparation Time: 40min <br />
+  Servings: 4 <br />
+  <button class="btn btn-secondary" name="submit" type="submit">Recipe</button>
+</div>
+</div>
+
+<!-- // ----------------------------------------------------------------------- -->
+
+
+
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

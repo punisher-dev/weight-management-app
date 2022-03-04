@@ -1,0 +1,34 @@
+{"meals":
+    [{  
+        "id":636026,
+        "imageType":"jpg",
+        "title":"Breakfast Biscuits and Gravy",
+        "readyInMinutes":45,
+        "servings":4,
+        "sourceUrl":"https://spoonacular.com/breakfast-biscuits-and-gravy-636026"},
+
+        {"id":1143704,
+        "imageType":"jpg",
+        "title":"Dot’s Pretzel Crusted Chicken with Homemade Ranch Dressing",
+        "readyInMinutes":25,
+        "servings":4,
+        "sourceUrl":"https://everydaydishes.com/simple-food-recipes/dinner-recipes/dots-pretzel-crusted-chicken/"},
+
+        {"id":640686,
+        "imageType":"jpg",
+        "title":"Creamy Potato Soup",
+        "readyInMinutes":45,
+        "servings":6,
+        "sourceUrl":"https://spoonacular.com/creamy-potato-soup-640686"
+        
+    }],
+
+        "nutrients":{"calories":2524.4,
+                    "protein":91.45,
+                    "fat":152.96,
+                    "carbohydrates":199.49}}
+
+
+
+
+{"meals": [{"id":1 }, {"id":2 }, {"id":3 }], "nutrients": {}}

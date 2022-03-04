@@ -9,19 +9,30 @@ $user_id = $_SESSION['user_id'];
 
   if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $sql = "select * from macros where user_id=".$user_id;
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
+    $sql = "select * from macros where user_id=:user_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['user_id' => $user_id]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
+
+    foreach($fetch as $item){
+      $calories = $item->calories;
+      $protein = $item->protein;
+      $fat = $item->fat;
+      $carbohydrates = $item->carbohydrates;
+      break;
+  }
+}
+
+    if ($result > 0) {
+      $calories = $calories;
+      $protein =  $protein;
+      $fat = $fat;
+      $carbohydrates = $carbohydrates;
     }else {
       $errorMsg = 'Could not Find Any Record';
     }
-  }
-
-    $calories = $row['calories'];
-    $protein = $row['protein'];
-    $fat = $row['fat'];
-    $carbohydrates = $row['carbohydrates'];
+  
 
 ?>
 
@@ -63,10 +74,17 @@ $user_id = $_SESSION['user_id'];
     <div> Calories: " . $calories . "Kcal </div><br /> 
     <div>Protein: " . $protein ."g </div><br /> 
     <div>Fat: " .$fat . "g </div><br /> 
-    <div>Carbohydrates: " . $carbohydrates . "g 
-    </div><br />"; ?>
+    <div>Carbohydrates: " . $carbohydrates . "g </div><br />
+
+    <button class='btn btn-secondary' onclick=\"location.href='mealPlan.php'\" >Plan</button>
+    <a href='Logout.php'>Log Out</a>
+    </div>";
     
-    <a href="Logout.php">Log Out</a>
+    ?>
+    
+    
+
+    
     
     </div>
 </div>

@@ -24,17 +24,18 @@ if(isset($_POST['submit'])){
     $password = md5($_POST['password']);
     $cpassword = md5($_POST['cpassword']);
 
-    if($password == $cpassword){
-        $sql = "SELECT * FROM users WHERE email='$email'";
-        $result = mysqli_query($conn, $sql);
-
-        if(!$result->num_rows > 0){
+    if(($password == $cpassword) && ($first_name == true) && ($last_name == true) && ($email == true) && ($address == true) && ($phone == true)){
+        $stmt = $conn->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        $result = $stmt->rowCount();
+       
+        if(!$result > 0){
 
                 $sql = "INSERT INTO users(first_name, last_name, email, address, phone, created_at, password)
-                        VALUES('$first_name', '$last_name', '$email', '$address', '$phone', '$created_at', '$password')";
-        
-        $result = mysqli_query($conn, $sql);
-
+                        VALUES(:first_name, :last_name, :email, :address, :phone, :created_at, :password)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'address' => $address, 'phone' => $phone, 'created_at' => $created_at, 'password' => $password]);
+        header("Location: index.php");
         if($result){
         header("Location: index.php");
         $first_name = "";
@@ -51,7 +52,7 @@ if(isset($_POST['submit'])){
         echo "<script>alert('E-mail already registered.')</script>";
     }
     } else {
-     echo "<script> alert('Password Not Matched.')</script>";
+     echo "<script> alert('Password Not Matched or one of the boxes is not filled')</script>";
     }
  }
 
@@ -89,11 +90,11 @@ if(isset($_POST['submit'])){
             <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" />
     </div>
     <div class="mb-3">
-            <label for="address" class="form-label">Address:</label>
+            <label for="address" class="form-label">Address:*</label>
             <input class="form-control" type="text" name="address" placeholder="Address" value="<?php echo $address; ?>" />
     </div>
     <div class="mb-3">
-            <label for="phone" class="form-label">Phone:</label>
+            <label for="phone" class="form-label">Phone:*</label>
             <input class="form-control" type="text" name="phone" placeholder="Phone" value="<?php echo $phone; ?>" />
     </div>
     <div class="mb-3">

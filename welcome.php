@@ -12,9 +12,12 @@ if(!isset($_SESSION['first_name']) && isset($_SESSION['user_id'])){
 $sess = $_SESSION['first_name'];
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT user_id FROM user_data WHERE user_id='$user_id'";
-$result = mysqli_query($conn, $sql);
-if($result->num_rows > 0){
+$sql = "SELECT user_id FROM user_data WHERE user_id= :user_id";
+$stmt = $conn->prepare($sql);
+$stmt->execute(['user_id' => $user_id]);
+$result = $stmt->rowCount();
+
+if($result > 0){
     header("Location: meal.php");
 } else{
 
@@ -38,17 +41,27 @@ if(!isset($_POST['submit'])){
 
     if($weight > 0 && $height > 0 && $age > 0 && !empty($sex)  && !empty($activity) && !empty($goal)){
 
-    $sql = "SELECT * FROM users WHERE first_name='$sess'";
-    $result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM users WHERE first_name= :first_name";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['first_name' => $sess]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
 
-        if($result->num_rows > 0){
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['user_id'] = $row['user_id'];
+    foreach($fetch as $item){
+        $user_id = $item->user_id;
+        break;
+    }
+
+        if($result > 0){
+            $_SESSION['user_id'] = $user_id;
             $user_id = $_SESSION['user_id'];
             $sql = "INSERT INTO user_data(user_id, weight, height, age, sex, activity, goal)
-            VALUES('$user_id', '$weight', '$height', '$age', '$sex', '$activity', '$goal')";
+            VALUES(:user_id, :weight, :height, :age, :sex, :activity, :goal)";
 
-            $result = mysqli_query($conn, $sql);
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['user_id' => $user_id, 'weight' => $weight, 'height' => $height, 'age' => $age, 'sex' => $sex, 'activity' => $activity, 'goal' => $goal]);
+            // header("Location: index.php");
+
 
             if($result){
                 header("Location: macros.php");

@@ -9,20 +9,21 @@ $user_id = $_SESSION['user_id'];
 
   if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $sql = "select * from users where user_id=".$user_id;
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
-    }else {
-      $errorMsg = 'Could not Find Any Record';
-    }
-  }
+    $sql = "select * from users where user_id=:user_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['user_id' => $user_id]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
 
-    $first_name = $row['first_name'];
-    $last_name = $row['last_name'];
-    $email = $row['email'];
-    $address = $row['address'];
-    $phone = $row['phone'];
+    foreach($fetch as $item){
+      $first_name = $item->first_name;
+      $last_name = $item->last_name;
+      $email = $item->email;
+      $address = $item->address;
+      $phone = $item->phone;
+      break;
+  }
+}
 
     if(isset($_POST['submit'])){
       $first_name = $_POST['first_name'];
@@ -30,6 +31,7 @@ $user_id = $_SESSION['user_id'];
       $email = $_POST['email'];
       $address = $_POST['address'];
       $phone = $_POST['phone'];
+      $updated_at = date("y-m-d h:i:s");
     } else {
       $errorMsg = 'Something went wrong';
     }
@@ -37,13 +39,17 @@ $user_id = $_SESSION['user_id'];
 
     if(!isset($errorMsg)){
 			$sql = "update users
-									set first_name = '".$first_name."',
-                  last_name = '".$last_name."',
-                  email = '".$email."',
-                  address = '".$address."',
-                  phone = '".$phone."'
-					where user_id=".$user_id;
-			$result = mysqli_query($conn, $sql);
+									set first_name = :first_name,
+                  last_name = :last_name,
+                  email = :email,
+                  address = :address,
+                  phone = :phone,
+                  updated_at = :updated_at
+					where user_id=:user_id";
+          $stmt = $conn->prepare($sql);
+          $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'address' => $address, 'phone' => $phone, 'updated_at' => $updated_at, 'user_id' => $user_id]);
+          $result = $stmt->rowCount();
+		
 			if($result){
 				echo "<script>alert('Updated Successfully.')</script>";
 				header('Location:account.php');
@@ -112,31 +118,31 @@ $(document).ready(function(){
     
     
     <div class='shown hidden mb-3'>
-            <input class='form-control' type='text' name='first_name' placeholder='First Name' value='" . $row['first_name'] . "' />
+            <input class='form-control' type='text' name='first_name' placeholder='First Name' value='" . $first_name . "' />
     </div>
 
     <div> Last Name: " . $last_name . " </div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='last_name' placeholder='Last Name' value='" . $row['last_name'] . "' />
+    <input class='form-control' type='text' name='last_name' placeholder='Last Name' value='" . $last_name . "' />
 </div>
 
     <div>Email: " . $email ."</div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='email' name='email' placeholder='Email' value='" . $row['email'] . "' />
+    <input class='form-control' type='email' name='email' placeholder='Email' value='" . $email . "' />
 </div>
 
-    <div>Address: " .$address . "</div><br /> 
+    <div>Address: " . $address . "</div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='address' placeholder='Address' value='" . $row['address'] . "' />
+    <input class='form-control' type='text' name='address' placeholder='Address' value='" . $address . "' />
 </div>
 
     <div>Phone: " . $phone . "</div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='phone' placeholder='Phone' value='" . $row['phone'] . "' />
+    <input class='form-control' type='text' name='phone' placeholder='Phone' value='" . $phone . "' />
 </div><br /> 
 <button id='show' class='btn edit btn-secondary' name='edit'>Edit</button>
 <button class='hidden shown btn btn-secondary' type='submit' name='submit'>Submit</button>

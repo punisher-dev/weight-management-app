@@ -12,12 +12,22 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-    $result = mysqli_query($conn, $sql);
-    if($result->num_rows > 0){
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['first_name'] = $row['first_name'];
-        $_SESSION['user_id'] = $row['user_id'];
+    $sql = "SELECT * FROM users WHERE email=:email AND password=:password";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['email' => $email, 'password' => $password]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
+
+
+    foreach($fetch as $item){
+        $first_name = $item->first_name;
+        $user_id = $item->user_id;
+        break;
+    }
+
+    if($result > 0){
+        $_SESSION['first_name'] = $first_name;
+        $_SESSION['user_id'] = $user_id;
     } else {
         echo "<script>alert('Email or Password is wrong.')</script>";
     }

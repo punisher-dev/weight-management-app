@@ -39,7 +39,7 @@ margin: 20px;
 }
 
 .container-fluid{
-    max-width: 350px;
+    max-width: 430px;
 }
 
 .account{
@@ -53,3 +53,17 @@ margin: 20px;
         display: none;
     }
 
+    .recipe{
+        max-width: 550px;
+        display: flex;
+        margin: auto;
+        margin-top: 40px;
+    }
+
+    .recipecard{
+        margin: 5px;
+    }
+
+    img{
+        padding: 5px;
+    }

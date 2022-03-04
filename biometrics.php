@@ -7,23 +7,25 @@ session_start();
 $sess = $_SESSION['first_name'];
 $user_id = $_SESSION['user_id'];
 
+
   if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $sql = "select * from user_data where user_id=".$user_id;
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
-    }else {
-      $errorMsg = 'Could not Find Any Record';
-    }
-  }
+    $sql = "select * from user_data where user_id=:user_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['user_id' => $user_id]);
+    $result = $stmt->rowCount();
+    $fetch = $stmt->fetchAll();
 
-    $weight = $row['weight'];
-    $height = $row['height'];
-    $age = $row['age'];
-    $sex = $row['sex'];
-    $activity = $row['activity'];
-    $goal = $row['goal'];
+    foreach($fetch as $item){
+      $weight = $item->weight;
+      $height = $item->height;
+      $age = $item->age;
+      $sex = $item->sex;
+      $activity = $item->activity;
+      $goal = $item->goal;
+      break;
+  }
+}
 
     if(isset($_POST['submit'])){
       $weight = $_POST['weight'];
@@ -38,13 +40,17 @@ $user_id = $_SESSION['user_id'];
 
     if(!isset($errorMsg)){
 			$sql = "update user_data
-									set weight = '".$weight."',
-                  height = '".$height."',
-                  age = '".$age."',
-                  activity = '".$activity."',
-                  goal = '".$goal."'
-					where user_id=".$user_id;
-			$result = mysqli_query($conn, $sql);
+									set weight = :weight,
+                  height = :height,
+                  age = :age,
+                  activity = :activity,
+                  goal = :goal
+					where user_id=:user_id";
+          $stmt = $conn->prepare($sql);
+          $stmt->execute(['weight' => $weight, 'height' => $height, 'age' => $age, 'activity' => $activity, 'goal' => $goal, 'user_id' => $user_id]);
+          $result = $stmt->rowCount();
+
+
 			if($result){
 				echo "<script>alert('Updated Successfully.')</script>";
 				header('Location:meal.php');
@@ -69,22 +75,30 @@ $user_id = $_SESSION['user_id'];
 
   if($activity == 'sedentary'){
       $activity = 20;
+      $activity_name = 'sedentary';
   }elseif($activity == 'light'){
       $activity = 37.5;
+      $activity_name = 'light';
   }elseif($activity == 'moderate'){
       $activity = 46.5;
+      $activity_name = 'moderate';
   }elseif($activity == 'active'){
       $activity = 55;
+      $activity_name = 'active';
   }elseif($activity == 'very-active'){
       $activity = 72.5;
+      $activity_name = 'very-active';
   } else {
       $activity = 90;
+      $activity_name = 'extra-active';
   }
 
 if($goal == 'loose'){
   $goal = $sexValue - 500;
+  $goal_name = 'loose';
 } else {
   $goal = $sexValue + 500;
+  $goal_name = 'gain';
 }
 
 
@@ -96,12 +110,15 @@ if($goal == 'loose'){
 
       if(!isset($errorMsg)){
         $sql = "update macros
-                    set calories = '".$calories."',
-                    protein = '".$protein."',
-                    fat = '".$fat."',
-                    carbohydrates = '".$carbohydrates."'
-            where user_id=".$user_id;
-        $result = mysqli_query($conn, $sql);
+                    set calories = :calories,
+                    protein = :protein,
+                    fat = :fat,
+                    carbohydrates = :carbohydrates
+            where user_id=:user_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['calories' => $calories, 'protein' => $protein, 'fat' => $fat, 'carbohydrates' => $carbohydrates, 'user_id' => $user_id]);
+            $result = $stmt->rowCount();
+
         if($result){
           echo "<script>alert('Updated Successfully.')</script>";
           header('Location:meal.php');
@@ -175,29 +192,29 @@ $(document).ready(function(){
     <div> Weight: " . $weight . "Kg </div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='weight' placeholder='Weight' value='" . $row['weight'] . "' />
+    <input class='form-control' type='text' name='weight' placeholder='Weight' value='" . $weight . "' />
 </div>
 
     <div> Height: " . $height . "cm </div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='height' placeholder='Height' value='" . $row['height'] . "' />
+    <input class='form-control' type='text' name='height' placeholder='Height' value='" . $height . "' />
 </div>
 
     <div>Age: " . $age ."</div><br /> 
 
     <div class='shown hidden mb-3'>
-    <input class='form-control' type='text' name='age' placeholder='Age' value='" . $row['age'] . "' />
+    <input class='form-control' type='text' name='age' placeholder='Age' value='" . $age . "' />
 </div>
 
     <div>Sex: " .$sex . "</div><br /> 
 
-    <div>Activity: " . $row['activity'] . " </div><br />
+    <div>Activity: " . $activity_name . " </div><br />
 
     <div class='shown hidden mb-3'>
     <label for='activity' class='form-label'>Activity*:</label>
     <select class='form-select' name='activity' id='activity'>
-        <option value='" . $row['activity'] . "'>" . $row['activity'] . "</option>
+        <option value='" . $activity_name . "'>" . $activity_name . "</option>
         <option value='sedentary'>Sedentary</option>
         <option value='light'>Light: 1-3 times a week</option>
         <option value='moderate'>Moderate: 3-4 times a week</option>
@@ -208,12 +225,12 @@ $(document).ready(function(){
 </div>
 
 
-    <div>Goal: " . $row['goal'] . " weight</div><br />
+    <div>Goal: " . $goal_name . " weight</div><br />
 
     <div class='shown hidden mb-3'>
     <label for='goal' class='form-label'>Goal*:</label>
     <select class='form-select' name='goal' id='goal'>
-        <option value='" . $row['goal'] . "'>" . $row['goal'] . "</option>
+        <option value='" . $goal_name . "'>" . $goal_name . "</option>
         <option value='loose'>Loose Weight</option>
         <option value='gain'>Gain Weight</option>
         </select>
