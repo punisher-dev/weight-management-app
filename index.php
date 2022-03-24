@@ -39,5 +39,9 @@ if(isset($_SESSION['first_name']) && isset($_SESSION['user_id'])){
     header("Location: welcome.html");
 }
 
+if(($_SESSION['user_id']) == 32){
+    header("Location: admin.php");
+}
+
 
 ?>

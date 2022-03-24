@@ -52,7 +52,8 @@ if(isset($_POST['submit'])){
         echo "<script>alert('E-mail already registered.')</script>";
     }
     } else {
-     echo "<script> alert('Password Not Matched or one of the boxes is not filled')</script>";
+     echo "<script> alert('Password Not Matched or one of the boxes is not filled, or E-mail already exists.')</script>";
+     
     }
  }
 

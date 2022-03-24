@@ -23,16 +23,16 @@ $('form.ajax').on('submit', function(){
         return false;
 });
 
-$(document).ready(function(){
-    $("#show").click(function(e){
-      e.preventDefault();
-      $(".shown").fadeIn();
-    });
-  });
+// $(document).ready(function(){
+//     $("#show").click(function(e){
+//       e.preventDefault();
+//       $(".shown").fadeIn();
+//     });
+//   });
   
-  $(document).ready(function(){
-    $("#show").click(function(e){
-      e.preventDefault();
-      $(".edit").hide();
-    });
-  });
+//   $(document).ready(function(){
+//     $("#show").click(function(e){
+//       e.preventDefault();
+//       $(".edit").hide();
+//     });
+//   });
