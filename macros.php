@@ -23,21 +23,8 @@ $sess = $_SESSION['first_name'];
         $goal = $item->goal;
         break;
     }
-
-
-//     if ($result > 0) {
-//       $row = $fetch;
-//     }else {
-//       $errorMsg = 'Could not Find Any Record';
-//     }
   }
 
-    // $weight = $row['weight'];
-    // $height = $row['height'];
-    // $age = $row['age'];
-    // $sex = $row['sex'];
-    // $activity = $row['activity'];
-    // $goal = $row['goal'];
     $calculator = ((10*$weight)+(6.25*$height)-(5*$age));
 
     if($sex == 'male'){

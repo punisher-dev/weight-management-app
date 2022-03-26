@@ -79,12 +79,6 @@ $(document).ready(function(){
   });
 });
 
-$(document).ready(function(){
-  $("#show").click(function(e){
-    e.preventDefault();
-    $(".edit").hide();
-  });
-});
 </script>
     <title>Account</title>
 </head>

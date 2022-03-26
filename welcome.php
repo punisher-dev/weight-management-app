@@ -12,6 +12,7 @@ if(!isset($_SESSION['first_name']) && isset($_SESSION['user_id'])){
 $sess = $_SESSION['first_name'];
 $user_id = $_SESSION['user_id'];
 
+
 $sql = "SELECT user_id FROM user_data WHERE user_id= :user_id";
 $stmt = $conn->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
