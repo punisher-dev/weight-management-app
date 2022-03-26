@@ -4,7 +4,7 @@ include 'Config.php';
 session_start();
 
 if(isset($_SESSION['first_name'])){
-    header("Location: index.html");
+    header("Location: index.php");
 }
 
 $first_name = '';
@@ -35,9 +35,9 @@ if(isset($_POST['submit'])){
                         VALUES(:first_name, :last_name, :email, :address, :phone, :created_at, :password)";
         $stmt = $conn->prepare($sql);
         $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'address' => $address, 'phone' => $phone, 'created_at' => $created_at, 'password' => $password]);
-        header("Location: index.html");
+        header("Location: index.php");
         if($result){
-        header("Location: index.html");
+        header("Location: index.php");
         $first_name = "";
         $last_name = "";
         $email = "";
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
     }
     } else {
      echo "<script> alert('Password Not Matched or one of the boxes is not filled, or E-mail already exists.')</script>";
-     
+
     }
  }
 

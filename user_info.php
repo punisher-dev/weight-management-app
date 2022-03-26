@@ -9,7 +9,7 @@ $user_id = $_SESSION['user_id'];
 $email = $_GET['subject'];
 
 
-if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 32)) {
+if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 1)) {
     $user_id = $_SESSION['user_id'];
     $sql = "select * from users where email= :email";
     $stmt = $conn->prepare($sql);
@@ -30,7 +30,7 @@ foreach($fetch as $item){
           break;
 }
 
-if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 32)) {
+if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 1)) {
     $user_id = $_SESSION['user_id'];
     $sql = "select * from user_data where user_id= :user_id";
     $stmt = $conn->prepare($sql);
@@ -51,7 +51,7 @@ foreach($fetch as $item){
     break;
 }
 
-if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 32)) {
+if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 1)) {
     $user_id = $_SESSION['user_id'];
     $sql = "select * from macros where user_id= :user_id";
     $stmt = $conn->prepare($sql);

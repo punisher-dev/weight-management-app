@@ -8,7 +8,7 @@ $sess = $_SESSION['first_name'];
 $user_id = $_SESSION['user_id'];
 
 
-if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 32)) {
+if ((isset($_SESSION['user_id'])) && (($_SESSION['user_id']) == 1)) {
     $user_id = $_SESSION['user_id'];
     $sql = "select * from users";
     $stmt = $conn->query($sql);
