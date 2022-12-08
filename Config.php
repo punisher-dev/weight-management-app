@@ -19,7 +19,7 @@
 //     die("<script>alert('Connection Failed')</script>");
 // } 
 
-mysql://root:cuBKMzc0CxtocPIQ3qLF@containers-us-west-158.railway.app:7431/railway
+mysql -hcontainers-us-west-158.railway.app -uroot -pcuBKMzc0CxtocPIQ3qLF --port 7431 --protocol=TCP railway
 
 
 ?>
