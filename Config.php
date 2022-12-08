@@ -19,17 +19,7 @@
 //     die("<script>alert('Connection Failed')</script>");
 // } 
 
-MYSQLDATABASE = railway
-
-MYSQLHOST = containers-us-west-158.railway.app
-
-MYSQLPASSWORD = cuBKMzc0CxtocPIQ3qLF
-
-MYSQLPORT = 7431
-
-MYSQLUSER = root
-
-MYSQL_URL = mysql://${{ MYSQLUSER }}:${{ MYSQLPASSWORD }}@${{ MYSQLHOST }}:${{ MYSQLPORT }}/${{ MYSQLDATABASE }}
+mysql://root:cuBKMzc0CxtocPIQ3qLF@containers-us-west-158.railway.app:7431/railway
 
 
 ?>
