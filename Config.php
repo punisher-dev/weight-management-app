@@ -46,7 +46,7 @@ $pass = "CH5eONjK1r5PuxMYShup";
 $username = "root";
 
 
-$conn = mysqli_connect($username, $pass, $servername, $db);
+// $conn = mysqli_connect($username, $pass, $servername, $db);
 // $dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
 
 $dsn = 'mysql://'.$username.':'.$pass.'@'.$servername.':5475/'.$db.'';
