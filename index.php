@@ -1,5 +1,5 @@
 <?php
-include '/app/Config.php';
+include 'Config.php';
 
 session_start();
 error_reporting(0);
