@@ -40,14 +40,13 @@
 // ____________________________________
 
 
-
-$servername = "containers-us-west-158.railway.app";
+$servername = "containers-us-west-102.railway.app";
 $username = "root";
-$pass = "cuBKMzc0CxtocPIQ3qLF";
+$pass = "CH5eONjK1r5PuxMYShup";
 $db = "railway";
 
 $conn = mysqli_connect($servername, $username, $pass, $db);
-$dsn = 'mysql:host='. $servername .';dbname='. $db;
+$dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
 
 $conn = new PDO($dsn, $username, $pass);
 $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
