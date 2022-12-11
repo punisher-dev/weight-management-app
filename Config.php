@@ -46,17 +46,19 @@
 // $db = "railway";
 
 // $conn = mysqli_connect($servername, $username, $pass, $db);
-$dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
+// $dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
+
+mysqli_connect('mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway');
 
 
-$conn = new PDO($dsn);
-$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+// $conn = new PDO($dsn, $username, $pass);
+// $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+// $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 
-if (!$conn){
-    die("<script>alert('Connection Failed')</script>");
-}
+// if (!$conn){
+//     die("<script>alert('Connection Failed')</script>");
+// }
 
 
 
