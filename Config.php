@@ -83,8 +83,7 @@
 // }
 
 
-
-$dsn = 'mysql:dbname=railway;host=containers-us-west-102.railway.app';
+$dsn = 'mysql:dbname=railway;host=containers-us-west-102.railway.app;port=5475';
 $username = "root";
 $pass = "CH5eONjK1r5PuxMYShup";
 
