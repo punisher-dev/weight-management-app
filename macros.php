@@ -1,7 +1,8 @@
 <?php
+session_start();
 include 'Config.php';
 
-session_start();
+
 
 $sess = $_SESSION['first_name'];
 
