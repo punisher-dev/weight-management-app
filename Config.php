@@ -41,9 +41,9 @@
 
 // $db = "railway";
 // $servername = "containers-us-west-102.railway.app";
-$pass = "CH5eONjK1r5PuxMYShup";
-// $port = 5475;
-$username = "root";
+// $pass = "CH5eONjK1r5PuxMYShup";
+// // $port = 5475;
+// $username = "root";
 
 
 // $conn = mysqli_connect($username, $pass, $servername, $db);
@@ -52,7 +52,7 @@ $dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:547
 // $dsn = 'mysql://'.$username.':'.$pass.'@'.$servername.':5475/'.$db.'';
 
 
-$conn = new PDO($dsn, $username, $pass);
+$conn = new PDO($dsn);
 // $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
