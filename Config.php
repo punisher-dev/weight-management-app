@@ -47,12 +47,12 @@
 
 
 // $conn = mysqli_connect($username, $pass, $servername, $db);
-$dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
+// $dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
 
 // $dsn = 'mysql://'.$username.':'.$pass.'@'.$servername.':5475/'.$db.'';
 
 
-$conn = new PDO($dsn);
+// $conn = new PDO($dsn);
 // $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
@@ -60,6 +60,27 @@ $conn = new PDO($dsn);
 // if (!$conn){
 //     die("<script>alert('Connection Failed')</script>");
 // }
+
+
+// ____________________________________
+
+$db = "railway";
+$servername = "containers-us-west-102.railway.app";
+$pass = "CH5eONjK1r5PuxMYShup";
+// $port = 5475;
+$username = "root";
+
+$conn = mysqli_connect($servername, $username, $pass, $db);
+$dsn = 'mysql:host='. $servername .';dbname='. $db;
+
+$conn = new PDO($dsn, $username, $pass);
+$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+
+if (!$conn){
+    die("<script>alert('Connection Failed')</script>");
+}
 
 ?>
 
