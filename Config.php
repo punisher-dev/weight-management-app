@@ -46,7 +46,7 @@ $port = "5475";
 $username = "root";
 
 
-$conn = mysqli_connect($username, $pass, $servername, $port, $db);
+// $conn = mysqli_connect($username, $pass, $servername, $port, $db);
 // $dsn = 'mysql://root:CH5eONjK1r5PuxMYShup@containers-us-west-102.railway.app:5475/railway';
 
 $dsn = 'mysql://'.$username.':'.$pass.'@'.$servername.':'.$port.'/'.$db.'';
